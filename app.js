@@ -315,10 +315,7 @@ app.delete("/attendances/:id", (req, res) => {
             .then((data) => {
                 if (data.rows[0]) {
                     db.query(query).then((_) => {
-                        res.status(200).send({
-                            id: id,
-                            name: data.rows[0].name,
-                        });
+                        res.status(200).send(data.rows[0]);
                         console.log(
                             `[${moment().format(
                                 dateFormat
