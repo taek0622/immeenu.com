@@ -50,7 +50,7 @@ app.get("/attendances", (req, res) => {
         const id = req.query.id;
         const name = req.query.name;
 
-        let query = `SELECT * FROM attendance`;
+        let query = `SELECT * FROM attendance ORDER BY id`;
 
         if (id || name) {
             query += ` WHERE `;
