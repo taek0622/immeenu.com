@@ -168,6 +168,16 @@ app.post("/attendances", (req, res) => {
         const name = req.body.name;
         const query = `INSERT INTO attendance (name) VALUES ('${name}')`;
 
+        if (!name) {
+            res.status(400).send({ message: "이름을 입력하지 않았습니다." });
+            console.log(
+                `[${moment().format(
+                    dateFormat
+                )}] ${badAccessError} 이름을 입력하지 않고 출석 정보 추가를 시도했습니다. (IP: ${IP})`
+            );
+            return;
+        }
+
         db.query(query)
             .then((_) => {
                 db.query(`SELECT * FROM attendance WHERE name='${name}'`).then(
@@ -219,6 +229,16 @@ app.put("/attendances/:id", (req, res) => {
         const id = req.params.id;
         const name = req.body.name;
         const query = `UPDATE attendance SET name='${name}' WHERE id=${id}`;
+
+        if (!name) {
+            res.status(400).send({ message: "이름을 입력하지 않았습니다." });
+            console.log(
+                `[${moment().format(
+                    dateFormat
+                )}] ${badAccessError} 이름을 입력하지 않고 출석 정보 수정을 시도했습니다. (IP: ${IP})`
+            );
+            return;
+        }
 
         db.query(`SELECT * FROM attendance WHERE id=${id}`)
             .then((data) => {
