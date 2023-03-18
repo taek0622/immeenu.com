@@ -243,12 +243,11 @@ app.put("/attendances/:id", (req, res) => {
         db.query(`SELECT * FROM attendance WHERE id=${id}`)
             .then((data) => {
                 if (data.rows[0]) {
+                    let newData = data.rows[0];
                     db.query(query).then((_) => {
-                        res.status(200).send({
-                            id: id,
-                            oldName: data.rows[0].name,
-                            name: name,
-                        });
+                        newData.oldName = newData.name;
+                        newData.name = name;
+                        res.status(200).send(newData);
                         console.log(
                             `[${moment().format(
                                 dateFormat
